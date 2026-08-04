@@ -1,4 +1,23 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/about-us",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/the-farm",
+      "destination": "/farm",
+      "permanent": true
+    },
+    {
+      "source": "/vacation-rentals",
+      "destination": "/stay",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

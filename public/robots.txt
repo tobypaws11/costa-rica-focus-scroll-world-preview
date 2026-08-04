@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://montanoa.com/sitemap.xml

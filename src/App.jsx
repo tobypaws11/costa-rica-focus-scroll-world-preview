@@ -5,9 +5,10 @@ STORY: Visitors move from origin to craft to a stay, then choose a farm tour, Ac
 FIRST VIEWPORT: Full-bleed hands hold the right side; brand and one decisive line occupy the dark left field; route marks sit at the edge.
 FORM: A continuous three-chapter forward camera journey adapted from Scroll World architecture A, with native scroll as its only clock.
 */
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { ContentRouter } from "./ContentPages";
 import ScrubVideo from "./ScrubVideo";
+import { Seo } from "./Seo";
 import { ArrowUpRight, SiteFooter, SiteHeader } from "./SiteChrome";
 import { scenes } from "./media";
 import { Link, usePathname } from "./router";
@@ -181,23 +182,18 @@ function App() {
   const reduced = useReducedMotion();
   const pathname = usePathname();
 
-  useEffect(() => {
-    const names = {
-      "/": "Montanoa — Coffee village in Monteverde",
-      "/about": "Our story — Montanoa",
-      "/farm": "The farm — Montanoa",
-      "/coffee": "Specialty coffee — Montanoa",
-      "/academy": "Academy — Montanoa",
-      "/stay": "Stay at Montanoa",
-      "/visit": "Plan your visit — Montanoa",
-    };
-    document.title = names[pathname] ?? "Montanoa — Monteverde, Costa Rica";
-  }, [pathname]);
-
-  if (pathname !== "/") return <ContentRouter pathname={pathname} />;
+  if (pathname !== "/") {
+    return (
+      <>
+        <Seo pathname={pathname} />
+        <ContentRouter pathname={pathname} />
+      </>
+    );
+  }
 
   return (
     <>
+      <Seo pathname={pathname} />
       <main id="top">
         {reduced ? <ReducedStory /> : <CinematicStory pathname={pathname} />}
         <section className="origin-statement" aria-labelledby="origin-title">
