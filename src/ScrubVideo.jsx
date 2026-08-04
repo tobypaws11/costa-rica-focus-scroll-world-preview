@@ -77,16 +77,14 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
 
   return (
     <>
-      {requested ? (
-        <img
-          className="scene-media scene-poster"
-          src={poster}
-          alt=""
-          style={{ objectPosition: focal }}
-          decoding="async"
-          fetchPriority={active ? "high" : "low"}
-        />
-      ) : null}
+      <img
+        className="scene-media scene-poster"
+        src={poster}
+        alt=""
+        style={{ objectPosition: focal }}
+        decoding="async"
+        fetchPriority={active ? "high" : "auto"}
+      />
       {src ? (
         <video
           ref={videoRef}
