@@ -7,6 +7,7 @@ FORM: A continuous three-chapter forward camera journey adapted from Scroll Worl
 */
 import { useMemo } from "react";
 import { ContentRouter } from "./ContentPages";
+import { ResponsiveImage } from "./ResponsiveImage";
 import ScrubVideo from "./ScrubVideo";
 import { Seo } from "./Seo";
 import { ArrowUpRight, SiteFooter, SiteHeader } from "./SiteChrome";
@@ -153,8 +154,8 @@ function CinematicStory({ pathname }) {
 function Pathways() {
   const pathways = [
     { label: "Farm experience", title: "Walk the real seed-to-cup process.", href: paths.farm, image: "/assets/original/farm-0112.jpeg", focal: "42% 48%" },
-    { label: "Academy", title: "Understand what makes coffee extraordinary.", href: paths.academy, image: "/assets/original/academy-0475.jpeg", focal: "42% 54%" },
-    { label: "Lodging", title: "Stay in the landscape where it begins.", href: paths.lodging, image: "/assets/original/stay-0068.jpeg", focal: "58% 54%" },
+    { label: "Academy", title: "Understand what makes coffee extraordinary.", href: paths.academy, image: "/assets/original/academy-0337.jpeg", focal: "50% 48%" },
+    { label: "Lodging", title: "Stay in the landscape where it begins.", href: paths.lodging, image: "/assets/original/stay-0019.jpeg", focal: "56% 50%" },
   ];
 
   return (
@@ -166,12 +167,11 @@ function Pathways() {
       <div className="pathway-list">
         {pathways.map((path, index) => (
           <Link className="pathway" to={path.href} key={path.label}>
-            <img
+            <ResponsiveImage
               src={path.image}
               alt=""
+              sizes="(max-width: 860px) 100vw, 34vw"
               style={{ objectPosition: path.focal }}
-              loading="lazy"
-              decoding="async"
             />
             <span className="pathway-number">0{index + 1}</span>
             <span className="pathway-label">{path.label}</span>

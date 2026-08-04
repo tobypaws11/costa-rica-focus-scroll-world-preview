@@ -166,12 +166,35 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-
 .section-heading { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(280px, 0.7fr); align-items: end; gap: 7vw; margin-bottom: clamp(60px, 8vw, 110px); }
 .section-heading > p { max-width: 50ch; margin: 0; color: var(--ink-soft); line-height: 1.7; }
 .people-list, .fact-rows, .offering-rows, .coffee-lots, .visit-option-list { border-top: 1px solid rgb(255 255 255 / 0.22); }
-.people-list article { display: grid; grid-template-columns: minmax(180px, 0.55fr) minmax(150px, 0.38fr) minmax(320px, 1.25fr); gap: 30px; padding: 38px 0; border-bottom: 1px solid rgb(255 255 255 / 0.2); }
+.people-list article { display: grid; grid-template-columns: minmax(190px, 0.48fr) minmax(170px, 0.42fr) minmax(320px, 1fr); gap: clamp(28px, 4vw, 70px); align-items: start; padding: clamp(44px, 6vw, 82px) 0; border-bottom: 1px solid rgb(255 255 255 / 0.2); }
+.people-list article > img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: center 34%; background: var(--volcanic); }
+.people-list article > img.is-landscape { aspect-ratio: 4 / 3; object-position: center; }
 .people-list h3, .fact-rows h3, .offering-rows h3 { font-size: clamp(1.4rem, 2.2vw, 2.1rem); line-height: 1.06; }
 .people-list p { margin: 0; max-width: 68ch; color: var(--ink-soft); line-height: 1.7; }
 .people-list .row-meta { color: var(--gold); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.person-name { display: flex; flex-direction: column; gap: 12px; }
+.person-story details { margin-top: 28px; padding-top: 20px; border-top: 1px solid rgb(255 255 255 / 0.18); }
+.person-story summary { min-height: 44px; color: var(--gold); cursor: pointer; font-size: 0.75rem; letter-spacing: 0.05em; }
+.person-story summary:focus-visible { outline: 1px solid var(--gold); outline-offset: 6px; }
+.person-story ul { margin: 18px 0 0; padding-left: 18px; color: var(--ink-soft); }
+.person-story li { padding: 5px 0; line-height: 1.55; }
 .fact-rows article { display: grid; grid-template-columns: minmax(220px, 0.58fr) minmax(320px, 1.42fr); gap: 5vw; padding: 34px 0; border-bottom: 1px solid rgb(255 255 255 / 0.2); }
 .fact-rows p { max-width: 68ch; margin: 0; color: var(--ink-soft); line-height: 1.72; }
+
+.photo-field { padding: clamp(100px, 12vw, 180px) clamp(24px, 8vw, 138px); background: var(--surface-footer); }
+.photo-field-heading { display: grid; grid-template-columns: minmax(130px, 0.36fr) minmax(380px, 1fr); gap: 7vw; align-items: start; margin-bottom: clamp(56px, 8vw, 110px); }
+.photo-field-heading > p { margin: 8px 0 0; color: var(--gold); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.photo-field-heading > div { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(250px, 0.62fr); gap: 5vw; align-items: end; }
+.photo-field-heading h2 { max-width: 11ch; }
+.photo-field-heading > div > p { max-width: 48ch; margin: 0; color: var(--ink-soft); line-height: 1.7; }
+.photo-field-grid { columns: 2; column-gap: clamp(14px, 2vw, 30px); }
+.photo-field-grid figure { break-inside: avoid; margin: 0 0 clamp(30px, 4vw, 54px); }
+.photo-field-grid img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: var(--volcanic); }
+.photo-field-grid figure.is-tall img { aspect-ratio: 3 / 4; }
+.photo-field-grid figure.is-wide img { aspect-ratio: 16 / 9; }
+.photo-field-grid figcaption { margin-top: 12px; color: var(--ink-soft); font-size: 0.68rem; letter-spacing: 0.04em; line-height: 1.5; }
+.academy-field { background: var(--surface-deep); }
+.stay-gallery { border-top: 1px solid rgb(255 255 255 / 0.14); }
 
 .tour-section > div:first-child > p, .online-section > div > p, .monteverde-section > div > p, .location-section p { max-width: 64ch; margin: 28px 0 0; color: var(--surface-paper-muted); line-height: 1.75; }
 .schedule { align-self: start; border-top: 1px solid currentColor; }
@@ -298,8 +321,17 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-
   .editorial-image figcaption { right: 24px; bottom: 20px; }
   .people-section, .lined-section, .coffee-section, .offerings-section, .visit-options { padding-block: 88px; }
   .section-heading { grid-template-columns: 1fr; gap: 28px; margin-bottom: 54px; }
-  .people-list article, .fact-rows article { grid-template-columns: 1fr; gap: 14px; padding: 30px 0; }
+  .people-list article, .fact-rows article { grid-template-columns: 1fr; gap: 22px; padding: 40px 0; }
+  .people-list article > img { max-width: 430px; aspect-ratio: 4 / 5; }
   .people-list .row-meta { margin-top: -4px; }
+  .person-name { gap: 10px; }
+  .person-story details { margin-top: 22px; }
+  .photo-field { padding-block: 88px; }
+  .photo-field-heading, .photo-field-heading > div { grid-template-columns: 1fr; gap: 28px; }
+  .photo-field-heading { margin-bottom: 54px; }
+  .photo-field-heading > p { margin-top: 0; }
+  .photo-field-grid { columns: 1; }
+  .photo-field-grid figure { margin-bottom: 34px; }
   .tour-section { gap: 54px; }
   .schedule dl > div { grid-template-columns: 1fr; gap: 6px; }
   .contact-band { grid-template-columns: 1fr; gap: 36px; align-items: start; padding-block: 80px; }

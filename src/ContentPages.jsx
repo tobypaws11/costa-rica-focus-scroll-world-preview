@@ -1,4 +1,5 @@
 import { ArrowUpRight, SiteFooter, SiteHeader } from "./SiteChrome";
+import { ResponsiveImage } from "./ResponsiveImage";
 import { Link } from "./router";
 
 const whatsapp = "https://wa.me/50683182105";
@@ -6,7 +7,15 @@ const whatsapp = "https://wa.me/50683182105";
 function PageHero({ title, intro, detail, image, alt, focal = "center" }) {
   return (
     <section className="content-hero">
-      <img src={image} alt={alt} style={{ objectPosition: focal }} decoding="async" fetchPriority="high" />
+      <ResponsiveImage
+        src={image}
+        alt={alt}
+        sizes="100vw"
+        style={{ objectPosition: focal }}
+        loading="eager"
+        fetchPriority="high"
+        wide
+      />
       <div className="content-hero-grade" />
       <div className="content-hero-copy">
         <h1>{title}</h1>
@@ -30,9 +39,36 @@ function PageFrame({ pathname, children }) {
 function EditorialImage({ src, alt, focal = "center", caption }) {
   return (
     <figure className="editorial-image">
-      <img src={src} alt={alt} style={{ objectPosition: focal }} loading="lazy" decoding="async" />
+      <ResponsiveImage src={src} alt={alt} sizes="100vw" style={{ objectPosition: focal }} />
       {caption ? <figcaption>{caption}</figcaption> : null}
     </figure>
+  );
+}
+
+function PhotoField({ eyebrow, title, intro, images, className = "" }) {
+  return (
+    <section className={`photo-field ${className}`.trim()}>
+      <div className="photo-field-heading">
+        <p>{eyebrow}</p>
+        <div>
+          <h2>{title}</h2>
+          {intro ? <p>{intro}</p> : null}
+        </div>
+      </div>
+      <div className="photo-field-grid">
+        {images.map((image, index) => (
+          <figure className={[image.tall ? "is-tall" : "", image.wide ? "is-wide" : ""].filter(Boolean).join(" ")} key={image.src}>
+            <ResponsiveImage
+              src={image.src}
+              alt={image.alt}
+              sizes="(max-width: 860px) 100vw, 50vw"
+              style={{ objectPosition: image.focal ?? "center" }}
+            />
+            {image.caption ? <figcaption>{String(index + 1).padStart(2, "0")} · {image.caption}</figcaption> : null}
+          </figure>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -56,16 +92,37 @@ function AboutPage({ pathname }) {
     {
       name: "William Leitón",
       role: "Main farm worker",
+      image: "/assets/original/team-william.jpeg",
+      alt: "William Leitón standing among the coffee plants at Montanoa",
       copy: "A lifelong farmer who created the coffee farm from a windswept cattle pasture. William has also worked as a forest ranger at the Monteverde Reserve, an ice-cream and cheese maker, and across maintenance, housekeeping and cooking roles in local hotels. To his family, he is the kindhearted center of Montanoa—and a great cook.",
     },
     {
       name: "Wilfredy Leitón",
       role: "CEO · Coffee educator",
-      copy: "Wilfredy returned to the farm to help his parents build a living from coffee. His training includes ICAFE barista education; SCA introduction, brewing, barista-skills and roasting courses; espresso and brewing modules; cupping with a Q Grader; and work as a technical judge and competition coach in Costa Rica.",
+      image: "/assets/original/team-wilfredy.jpeg",
+      alt: "Wilfredy Leitón leading a coffee lesson at Montanoa Academy",
+      copy: "Wilfredy returned to the farm to help his parents build a living from coffee. His work now connects farm production, barista craft, sensory education and Costa Rica’s professional coffee community.",
+      credentials: [
+        "Technical judge — Costa Rica Barista Championship, World Coffee Events (2023)",
+        "Professional Barista Course — Academia Costarricense del Café (2021)",
+        "Intermediate espresso — Vandola Academia de Barismo (2022)",
+        "Intermediate brewing methods — Instituto del Café de Costa Rica (2022)",
+        "SCA Introduction to Coffee and Brewing Foundation (2022)",
+        "SCA Barista Skills Foundation and Brewing Intermediate (2023)",
+        "SCA Barista Skills Intermediate (2023)",
+        "SCA Introduction to Roasting (2024)",
+        "Basic cupping with the SCA scoresheet — Esdras Vega, Q Grader (2019)",
+        "Coach, national Vandola competition (2023)",
+        "Coach, national Brewers competition (2024)",
+        "Assistant coach, national Barista competition (2024)",
+      ],
     },
     {
       name: "Kimberly Leitón",
       role: "Tour guide",
+      image: "/assets/original/team-kimberly.jpg",
+      alt: "Kimberly Leitón with her two children on the family farm",
+      landscape: true,
       copy: "The family’s youngest sister, a mother of two, a barista and an ecological-tourism graduate. Kimberly brings the farm, its food and its ecology together for visitors—and is especially known in the family for her pastries.",
     },
   ];
@@ -76,9 +133,9 @@ function AboutPage({ pathname }) {
         title="A family story, grown against the wind."
         intro="Montanoa began with school books, hard work and the decision to return home with new knowledge."
         detail="San Luis · Monteverde · Since 1997"
-        image="/assets/original/farm-0075.jpg"
-        alt="The Montanoa farm landscape in San Luis, Monteverde"
-        focal="52% 48%"
+        image="/assets/original/about-0430.jpeg"
+        alt="Espresso being prepared at Montanoa"
+        focal="69% 54%"
       />
       <section className="story-grid">
         <h2>Dreams, coffee and nature meet here.</h2>
@@ -89,10 +146,10 @@ function AboutPage({ pathname }) {
         </div>
       </section>
       <EditorialImage
-        src="/assets/original/farm-0112.jpeg"
-        alt="Coffee growing among the vegetation at Montanoa"
-        caption="The family farm sits just below the Monteverde Cloud Forest."
-        focal="42% 48%"
+        src="/assets/original/about-0440.jpeg"
+        alt="Three cups of espresso prepared at Montanoa"
+        caption="A family story now shared through farm work, hospitality and coffee education."
+        focal="50% 48%"
       />
       <section className="people-section">
         <div className="section-heading">
@@ -102,9 +159,25 @@ function AboutPage({ pathname }) {
         <div className="people-list">
           {team.map((person) => (
             <article key={person.name}>
-              <h3>{person.name}</h3>
-              <p className="row-meta">{person.role}</p>
-              <p>{person.copy}</p>
+              <ResponsiveImage
+                src={person.image}
+                alt={person.alt}
+                className={person.landscape ? "is-landscape" : ""}
+                sizes="(max-width: 860px) 100vw, 30vw"
+              />
+              <div className="person-name">
+                <h3>{person.name}</h3>
+                <p className="row-meta">{person.role}</p>
+              </div>
+              <div className="person-story">
+                <p>{person.copy}</p>
+                {person.credentials ? (
+                  <details>
+                    <summary>Training and competition experience</summary>
+                    <ul>{person.credentials.map((item) => <li key={item}>{item}</li>)}</ul>
+                  </details>
+                ) : null}
+              </div>
             </article>
           ))}
         </div>
@@ -155,6 +228,17 @@ function FarmPage({ pathname }) {
           ))}
         </div>
       </section>
+      <PhotoField
+        eyebrow="Field notes"
+        title="A farm read through small details."
+        intro="The original Montanoa archive returns here as a closer look at the plants, flowering cycles and hand-scale processing behind the larger landscape."
+        images={[
+          { src: "/assets/original/farm-0092.jpeg", alt: "Green coffee cherries ripening on a branch at Montanoa", caption: "Coffee fruit developing under the farm canopy" },
+          { src: "/assets/original/farm-0029.jpeg", alt: "A red flower growing on the Montanoa farm", caption: "Biodiversity woven into the working farm", tall: true },
+          { src: "/assets/original/farm-0005.jpeg", alt: "White coffee blossoms and green leaves at Montanoa", caption: "Coffee blossom before the fruit" },
+          { src: "/assets/original/farm-0059.jpeg", alt: "Green coffee beans being examined during processing", caption: "Care and observation at every stage" },
+        ]}
+      />
       <section className="tour-section">
         <div>
           <h2>Tour the real seed-to-cup process.</h2>
@@ -198,9 +282,9 @@ function CoffeePage({ pathname }) {
         title="Coffee is Costa Rica’s golden bean."
         intro="Montanoa shares a small collection of traceable specialty coffees shaped by producer, place, variety and process."
         detail="Specialty coffee · Farm to cup"
-        image="/assets/original/academy-0245.jpeg"
-        alt="Coffee preparation at Montanoa"
-        focal="52% 52%"
+        image="/assets/original/coffee-0222.jpeg"
+        alt="Espresso flowing into a measuring cup at Montanoa"
+        focal="55% 44%"
       />
       <section className="story-grid">
         <h2>Two centuries of knowledge in every lot.</h2>
@@ -219,10 +303,10 @@ function CoffeePage({ pathname }) {
         </div>
       </section>
       <EditorialImage
-        src="/assets/original/academy-0706.jpeg"
-        alt="A specialty coffee learning session at Montanoa"
-        caption="Coffee becomes a relationship between every hand in the chain."
-        focal="54% 50%"
+        src="/assets/original/farm-0059.jpeg"
+        alt="Green coffee beans being evaluated during processing"
+        caption="Traceability begins with the producer, the place and each decision made before roasting."
+        focal="50% 52%"
       />
       <section className="coffee-section">
         <div className="section-heading">
@@ -307,9 +391,9 @@ function AcademyPage({ pathname }) {
         title="Knowledge makes the cup complete."
         intro="Montanoa Academy connects specialty coffee to every hand that grows, sources, roasts, brews and values it."
         detail="In coffea veritas"
-        image="/assets/original/academy-0475.jpeg"
-        alt="Coffee education at Montanoa Academy"
-        focal="42% 54%"
+        image="/assets/original/academy-0337.jpeg"
+        alt="Wilfredy Leitón teaching a coffee tasting session at Montanoa Academy"
+        focal="50% 48%"
       />
       <section className="story-grid">
         <h2>Every answer should lead to a better question.</h2>
@@ -319,10 +403,22 @@ function AcademyPage({ pathname }) {
         </div>
       </section>
       <EditorialImage
-        src="/assets/original/academy-0765.jpeg"
-        alt="Hands-on barista instruction at Montanoa Academy"
+        src="/assets/original/academy-0826.jpeg"
+        alt="Wilfredy Leitón preparing coffee with a participant at Montanoa Academy"
         caption="Hands-on education for curious drinkers and working coffee professionals."
-        focal="52% 52%"
+        focal="52% 48%"
+      />
+      <PhotoField
+        eyebrow="Inside the Academy"
+        title="Learning through tasting, place and practice."
+        intro="These photographs document past Montanoa sessions. Current course and workshop dates are confirmed directly with the Academy."
+        images={[
+          { src: "/assets/original/academy-0573.jpeg", alt: "Wilfredy Leitón discussing a coffee sample with Academy participants", caption: "Guided sensory discussion" },
+          { src: "/assets/original/academy-0245.jpeg", alt: "Roasted coffee beans being weighed for a tasting session", caption: "Measured preparation for repeatable tasting" },
+          { src: "/assets/original/academy-0594.jpeg", alt: "Wilfredy Leitón explaining Costa Rica coffee regions on a map", caption: "Origin and regional context" },
+          { src: "/assets/original/academy-0256.jpeg", alt: "A participant smelling roasted coffee during sensory analysis", caption: "Aroma and sensory analysis", tall: true },
+        ]}
+        className="academy-field"
       />
       <section className="offerings-section">
         <div className="section-heading">
@@ -341,13 +437,10 @@ function AcademyPage({ pathname }) {
         <div className="workshop-rows">
           {workshops.map((workshop) => (
             <article className="workshop-row" key={workshop.title}>
-              <img
+              <ResponsiveImage
                 src={workshop.image}
                 alt={workshop.alt}
-                width="2048"
-                height="1365"
-                loading="lazy"
-                decoding="async"
+                sizes="(max-width: 860px) 100vw, 38vw"
               />
               <div className="workshop-copy">
                 <h3>{workshop.title}</h3>
@@ -379,6 +472,25 @@ function StayPage({ pathname }) {
     ["The essentials", "A relaxing shower and a basic kitchenette for an independent stay."],
     ["The landscape", "Tropical birds, butterflies, leaf-cutter ants and the life of the farm begin just outside the door."],
   ];
+  const gallery = [
+    { src: "/assets/original/stay-0076.jpeg", alt: "A panoramic view from Montanoa toward the mountains and Gulf of Nicoya", caption: "The wide Pacific-facing outlook", wide: true },
+    { src: "/assets/original/stay-0019.jpeg", alt: "The guest-house bedroom with its large window and balcony", caption: "Bedroom, view and balcony in one quiet space" },
+    { src: "/assets/original/stay-0029.jpeg", alt: "The made bed inside the Montanoa guest house", caption: "A simple room designed for rest" },
+    { src: "/assets/original/stay-0022.jpeg", alt: "Fresh towels arranged for guests", caption: "Fresh linens on arrival" },
+    { src: "/assets/original/stay-0007.jpeg", alt: "The private bathroom and shower in the guest house", caption: "Private bathroom and shower" },
+    { src: "/assets/original/stay-0028.jpeg", alt: "The bathroom basin and modern faucet", caption: "Bathroom details" },
+    { src: "/assets/original/stay-0038.jpeg", alt: "The compact guest-house kitchenette", caption: "An independent kitchenette" },
+    { src: "/assets/original/stay-0040.jpeg", alt: "The kitchenette with microwave, sink and dining essentials", caption: "Cooking and dining essentials" },
+    { src: "/assets/original/stay-0053.jpeg", alt: "Coffee equipment provided inside the guest house", caption: "Coffee remains close at hand" },
+    { src: "/assets/original/stay-0037.jpeg", alt: "The induction cooktop in the kitchenette", caption: "Compact induction cooking" },
+    { src: "/assets/original/stay-0036.jpeg", alt: "Oil, salt and pepper supplied in the kitchenette", caption: "Small practical provisions" },
+    { src: "/assets/original/stay-0035.jpeg", alt: "Kitchen towels and storage inside the guest house", caption: "Everyday kitchen details" },
+    { src: "/assets/original/stay-0063.jpeg", alt: "The private balcony overlooking Monteverde at blue hour", caption: "A private balcony in the cloud-forest air" },
+    { src: "/assets/original/stay-0064.jpeg", alt: "A second balcony view across the surrounding mountains", caption: "The hillside beyond the rail" },
+    { src: "/assets/original/stay-0075.jpeg", alt: "Layered mountain ridges seen from Montanoa", caption: "Mountain layers toward the Pacific", tall: true },
+    { src: "/assets/original/stay-0070.jpeg", alt: "Bright fungi growing on a tree beside the guest house", caption: "The living forest at the doorstep" },
+    { src: "/assets/original/stay-0079.jpeg", alt: "A dramatic orange sunset seen from the Montanoa property", caption: "Sunset over the distant gulf", wide: true },
+  ];
 
   return (
     <PageFrame pathname={pathname}>
@@ -409,6 +521,13 @@ function StayPage({ pathname }) {
           {amenities.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}
         </div>
       </section>
+      <PhotoField
+        eyebrow="The guest house"
+        title="See the stay before you arrive."
+        intro="The complete original lodging archive is now part of the page: room, bathroom, kitchenette, balcony and the landscape immediately outside."
+        images={gallery}
+        className="stay-gallery"
+      />
       <section className="monteverde-section">
         <div>
           <h2>Monteverde is a unique destination.</h2>
