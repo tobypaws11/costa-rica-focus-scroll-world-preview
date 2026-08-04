@@ -54,10 +54,6 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
     if (!requested || !active || !video?.currentSrc) return;
 
     video.preload = "auto";
-    if (video.readyState < 2 && video.networkState === 1) {
-      setReady(false);
-      video.load();
-    }
   }, [active, requested]);
 
   useEffect(() => {
