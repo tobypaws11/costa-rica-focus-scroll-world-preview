@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.DS_Store
+.vercel/
+
+# Keep the optimized web encodes used by the app; omit superseded source media.
+public/assets/video/*-scrub.mp4
+public/assets/video/*-scrub-mobile.mp4
+public/assets/video/*-poster.png
+public/assets/montanoa-coffee-hands-start-16x9.png
+public/assets/montanoa-scene-academy.png
+public/assets/montanoa-scene-harvest.png
+public/assets/montanoa-scene-lodging.png
+public/assets/montanoa-scene-process.png
