@@ -253,7 +253,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-
   .sight-line-left { left: 20px; }
   .sight-line-right { right: 20px; }
   .scene-grade { background: linear-gradient(0deg, rgb(var(--scene-scrim-rgb) / 0.96) 0%, rgb(var(--scene-scrim-rgb) / 0.64) 33%, transparent 68%); }
-  .scene-media { object-position: center 48% !important; }
+  .scene-media { object-position: center 48%; }
   .chapter-copy { left: 36px; right: 58px; bottom: calc(66px + env(safe-area-inset-bottom)); width: auto; }
   .chapter-count { display: none; }
   .chapter-copy h1 { max-width: 11ch; font-size: clamp(2.55rem, 12vw, 4.25rem); }

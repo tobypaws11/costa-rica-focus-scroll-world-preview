@@ -17,7 +17,10 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
     if (!requested || !src) return undefined;
 
     const mobile = matchMedia("(max-width: 860px), (pointer: coarse)").matches;
-    const selected = mobile && mobileSrc ? mobileSrc : src;
+    const connection = navigator.connection ?? navigator.mozConnection ?? navigator.webkitConnection;
+    const constrained = connection?.saveData
+      || ["slow-2g", "2g"].includes(connection?.effectiveType);
+    const selected = mobile && mobileSrc && constrained ? mobileSrc : src;
     const video = videoRef.current;
     if (!selected || !video) return undefined;
 
@@ -36,6 +39,7 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
   useEffect(() => {
     targetRef.current = clamp(progress);
     const video = videoRef.current;
+    if (targetRef.current <= 0.004) setPainted(false);
     if (!ready || !video || !Number.isFinite(video.duration) || video.seeking) return;
     const target = targetRef.current * Math.max(0, video.duration - 0.03);
     const threshold = matchMedia("(max-width: 860px)").matches ? 0.04 : 0.012;
@@ -69,15 +73,18 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
         <video
           ref={videoRef}
           className={`scene-media scene-video ${painted ? "is-painted" : ""}`}
+          style={{ objectPosition: focal }}
           muted
           playsInline
-          preload="metadata"
+          preload={requested ? "auto" : "none"}
           aria-hidden="true"
           onLoadedMetadata={() => setReady(true)}
           onLoadedData={() => {
-            if (targetRef.current < 0.01) setPainted(true);
+            if (targetRef.current > 0.004 && !videoRef.current?.seeking) setPainted(true);
           }}
-          onSeeked={() => setPainted(true)}
+          onSeeked={() => {
+            if (targetRef.current > 0.004) setPainted(true);
+          }}
         />
       ) : null}
     </>

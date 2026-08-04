@@ -72,7 +72,7 @@ function CinematicStory({ pathname }) {
             const opacity = sceneOpacity(progress, index, scenes.length);
             const local = chapterProgress[index];
             const shouldLoad = index === active
-              || (index === active + 1 && chapterProgress[active] >= 0.55);
+              || (index === active + 1 && chapterProgress[active] >= 0.4);
             return (
               <div
                 key={scene.id}
