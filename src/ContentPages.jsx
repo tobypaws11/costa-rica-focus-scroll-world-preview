@@ -264,13 +264,41 @@ function AcademyPage({ pathname }) {
     "Intermediate brewing methods module — 20 hours",
   ];
   const workshops = [
-    "Using the SCA cupping form",
-    "Tasting different drying processes and origins",
-    "Cold-brewed coffee",
-    "Pour-over technique and its variables",
-    "Calibrating espresso",
-    "Milk foaming and latte art",
-    "Coffee roasting — roast your own beans",
+    {
+      title: "Using the SCA cupping form",
+      image: "/assets/original/academy-0387.jpeg",
+      alt: "Roasted coffee samples and an SCA cupping form",
+    },
+    {
+      title: "Tasting different drying processes and origins",
+      image: "/assets/original/academy-0448.jpeg",
+      alt: "Coffee professional tasting an espresso during a workshop",
+    },
+    {
+      title: "Cold brewed coffee",
+      image: "/assets/original/academy-cold-brew.jpeg",
+      alt: "Cold-brew coffee being poured over ice",
+    },
+    {
+      title: "How to pour over and its variables",
+      image: "/assets/original/academy-0475.jpeg",
+      alt: "Pour-over coffee preparation at Montanoa Academy",
+    },
+    {
+      title: "Calibrating espresso",
+      image: "/assets/original/academy-0706.jpeg",
+      alt: "Espresso calibration at Montanoa Academy",
+    },
+    {
+      title: "Milk foaming and latte art",
+      image: "/assets/original/academy-0765.jpeg",
+      alt: "Hands-on milk foaming and latte-art instruction",
+    },
+    {
+      title: "Coffee roasting (Roast your own beans)",
+      image: "/assets/original/academy-roasting.jpg",
+      alt: "Fresh coffee beans cooling after roasting",
+    },
   ];
 
   return (
@@ -310,8 +338,23 @@ function AcademyPage({ pathname }) {
           <h2>Two-hour workshops.</h2>
           <p>Focused sessions that turn one part of coffee craft into something you can understand and practice.</p>
         </div>
-        <div className="offering-rows">
-          {workshops.map((workshop) => <article key={workshop}><h3>{workshop}</h3><a href={whatsapp}>More information <ArrowUpRight /></a></article>)}
+        <div className="workshop-rows">
+          {workshops.map((workshop) => (
+            <article className="workshop-row" key={workshop.title}>
+              <img
+                src={workshop.image}
+                alt={workshop.alt}
+                width="2048"
+                height="1365"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="workshop-copy">
+                <h3>{workshop.title}</h3>
+                <a href={whatsapp}>More information <ArrowUpRight /></a>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
       <section className="online-section">

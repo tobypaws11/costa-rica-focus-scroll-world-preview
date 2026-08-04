@@ -201,6 +201,14 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-
 .offering-rows article { display: flex; align-items: center; justify-content: space-between; gap: 30px; min-height: 116px; padding: 24px 0; border-bottom: 1px solid rgb(255 255 255 / 0.2); }
 .offering-rows article > a { display: inline-flex; align-items: center; flex: 0 0 auto; gap: 8px; min-height: 44px; color: var(--gold); text-decoration: none; font-size: 0.75rem; }
 .workshops-section { padding-top: 0; }
+.workshop-rows { border-top: 1px solid rgb(255 255 255 / 0.22); }
+.workshop-row { display: grid; grid-template-columns: minmax(280px, 0.72fr) minmax(360px, 1.28fr); gap: clamp(38px, 7vw, 120px); align-items: center; padding: clamp(34px, 4vw, 58px) 0; border-bottom: 1px solid rgb(255 255 255 / 0.2); }
+.workshop-row > img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; background: var(--volcanic); }
+.workshop-copy { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(30px, 4vw, 54px); }
+.workshop-copy h3 { max-width: 21ch; font-size: clamp(2rem, 3.5vw, 4.2rem); line-height: 0.98; letter-spacing: -0.03em; }
+.workshop-copy > a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--gold); text-decoration: none; font-size: 0.75rem; }
+.workshop-copy > a .arrow-up-right { transition: transform 220ms ease-out; }
+.workshop-copy > a:hover .arrow-up-right { transform: translate(2px, -2px); }
 .online-section ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid currentColor; }
 .online-section li { padding: 24px 0; border-bottom: 1px solid rgb(23 28 24 / 0.2); font-size: clamp(1.25rem, 2vw, 1.8rem); }
 
@@ -301,6 +309,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-
   .availability-band { grid-template-columns: 1fr; gap: 34px; align-items: start; padding-block: 76px; }
   .offering-rows article { align-items: flex-start; min-height: 0; padding: 28px 0; }
   .offering-rows article h3 { max-width: 15ch; }
+  .workshop-row { grid-template-columns: 1fr; gap: 26px; padding: 40px 0; }
+  .workshop-row > img { aspect-ratio: 4 / 3; }
+  .workshop-copy { gap: 18px; }
+  .workshop-copy h3 { max-width: 16ch; font-size: clamp(2rem, 9vw, 3.1rem); }
   .monteverde-section li { grid-template-columns: 84px 1fr; }
   .monteverde-section strong { font-size: 2.2rem; }
   .visit-option-list > a { min-height: 140px; }
@@ -322,7 +334,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-
   .chapter-route button span,
   .chapter-route button i,
   .pathway img,
-  .pathway::after { transition-duration: 0ms; }
+  .pathway::after,
+  .workshop-copy > a .arrow-up-right { transition-duration: 0ms; }
   .action:hover,
   .pathway:hover img,
   .pathway:focus-visible img { transform: none; }

@@ -10,9 +10,13 @@ These files were downloaded from Montanoa's existing public WordPress media libr
 ## Academy
 
 - `public/assets/original/academy-0245.jpeg` — [source](https://montanoa.com/wp-content/uploads/2023/10/montanoa-fotos-generales-monteverde-2023-05-0245.jpeg)
+- `public/assets/original/academy-0387.jpeg` — [source](https://montanoa.com/wp-content/uploads/2023/10/montanoa-fotos-generales-monteverde-2023-05-0387.jpeg)
+- `public/assets/original/academy-0448.jpeg` — [source](https://montanoa.com/wp-content/uploads/2023/10/montanoa-fotos-generales-monteverde-2023-05-0448.jpeg)
 - `public/assets/original/academy-0475.jpeg` — [source](https://montanoa.com/wp-content/uploads/2023/10/montanoa-fotos-generales-monteverde-2023-05-0475.jpeg)
 - `public/assets/original/academy-0706.jpeg` — [source](https://montanoa.com/wp-content/uploads/2023/10/montanoa-fotos-generales-monteverde-2023-05-0706.jpeg)
 - `public/assets/original/academy-0765.jpeg` — [source](https://montanoa.com/wp-content/uploads/2023/10/montanoa-fotos-generales-monteverde-2023-05-0765.jpeg)
+- `public/assets/original/academy-cold-brew.jpeg` — [source](https://montanoa.com/wp-content/uploads/2023/10/pouring-cold-brew-coffee-2021-08-26-16-53-49-utc.jpeg)
+- `public/assets/original/academy-roasting.jpg` — [source](https://montanoa.com/wp-content/uploads/2024/09/professional-handmade-coffee-roasting-process-met-2023-11-27-05-15-52-utc.jpg)
 
 ## Stay
 
