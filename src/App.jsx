@@ -55,7 +55,8 @@ function CinematicStory({ pathname }) {
     if (!root) return;
     const top = window.scrollY + root.getBoundingClientRect().top;
     const distance = root.offsetHeight - window.innerHeight;
-    window.scrollTo({ top: top + (index / (scenes.length - 1)) * distance, behavior: "smooth" });
+    const chapterStart = index === 0 ? 0 : Math.min(1, index / scenes.length + 0.002);
+    window.scrollTo({ top: top + chapterStart * distance, behavior: "smooth" });
   };
 
   return (
