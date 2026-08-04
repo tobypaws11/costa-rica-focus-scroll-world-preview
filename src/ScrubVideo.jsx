@@ -2,6 +2,18 @@ import { useEffect, useRef, useState } from "react";
 
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
+const seekThreshold = () => (matchMedia("(max-width: 860px)").matches ? 0.04 : 0.012);
+
+const syncToTarget = (video, progress) => {
+  if (!video || !Number.isFinite(video.duration) || video.seeking) return false;
+
+  const target = clamp(progress) * Math.max(0, video.duration - 0.03);
+  if (Math.abs(video.currentTime - target) <= seekThreshold()) return true;
+
+  video.currentTime = target;
+  return false;
+};
+
 export default function ScrubVideo({ src, mobileSrc, poster, progress, active, load, focal }) {
   const videoRef = useRef(null);
   const targetRef = useRef(0);
@@ -26,6 +38,7 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
 
     setReady(false);
     setPainted(false);
+    video.preload = active ? "auto" : "metadata";
     video.src = selected;
     video.load();
 
@@ -37,13 +50,22 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
   }, [requested, src, mobileSrc]);
 
   useEffect(() => {
+    const video = videoRef.current;
+    if (!requested || !active || !video?.currentSrc) return;
+
+    video.preload = "auto";
+    if (video.readyState < 2 && video.networkState === 1) {
+      setReady(false);
+      video.load();
+    }
+  }, [active, requested]);
+
+  useEffect(() => {
     targetRef.current = clamp(progress);
     const video = videoRef.current;
     if (targetRef.current <= 0.004) setPainted(false);
-    if (!ready || !video || !Number.isFinite(video.duration) || video.seeking) return;
-    const target = targetRef.current * Math.max(0, video.duration - 0.03);
-    const threshold = matchMedia("(max-width: 860px)").matches ? 0.04 : 0.012;
-    if (Math.abs(video.currentTime - target) > threshold) video.currentTime = target;
+    if (!ready || !video) return;
+    syncToTarget(video, targetRef.current);
   }, [progress, ready]);
 
   useEffect(() => {
@@ -76,14 +98,20 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
           style={{ objectPosition: focal }}
           muted
           playsInline
-          preload={requested ? "auto" : "none"}
+          preload={active ? "auto" : requested ? "metadata" : "none"}
           aria-hidden="true"
           onLoadedMetadata={() => setReady(true)}
           onLoadedData={() => {
-            if (targetRef.current > 0.004 && !videoRef.current?.seeking) setPainted(true);
+            const video = videoRef.current;
+            if (targetRef.current > 0.004 && syncToTarget(video, targetRef.current)) {
+              setPainted(true);
+            }
           }}
           onSeeked={() => {
-            if (targetRef.current > 0.004) setPainted(true);
+            const video = videoRef.current;
+            if (targetRef.current > 0.004 && syncToTarget(video, targetRef.current)) {
+              setPainted(true);
+            }
           }}
         />
       ) : null}

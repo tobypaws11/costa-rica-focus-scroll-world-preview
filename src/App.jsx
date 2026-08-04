@@ -59,7 +59,12 @@ function CinematicStory({ pathname }) {
   };
 
   return (
-    <section ref={rootRef} className="cinematic" aria-label="Scroll through Montanoa" style={{ "--journey-progress": progress }}>
+    <section
+      ref={rootRef}
+      className={`cinematic${progress >= 0.999 ? " is-complete" : ""}`}
+      aria-label="Scroll through Montanoa"
+      style={{ "--journey-progress": progress }}
+    >
       <div className="stage">
         <div className="stage-progress" aria-hidden="true"><span /></div>
         <SiteHeader overlay pathname={pathname} />
@@ -72,7 +77,7 @@ function CinematicStory({ pathname }) {
             const opacity = sceneOpacity(progress, index, scenes.length);
             const local = chapterProgress[index];
             const shouldLoad = index === active
-              || (index === active + 1 && chapterProgress[active] >= 0.4);
+              || (index === active + 1 && chapterProgress[active] >= 0.72);
             return (
               <div
                 key={scene.id}

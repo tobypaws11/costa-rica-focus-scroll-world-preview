@@ -109,6 +109,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-
 .chapter-route button.is-active i { background: currentColor; transform: rotate(45deg) scale(1.25); }
 .scroll-cue { position: absolute; z-index: 32; right: clamp(46px, 5.6vw, 90px); bottom: 30px; display: flex; align-items: center; gap: 12px; color: rgb(255 255 255 / 0.62); text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.61rem; }
 .scroll-cue i { width: 46px; height: 1px; background: currentColor; transform-origin: left; animation: breathe-line 1.8s ease-in-out infinite; }
+.cinematic.is-complete .scroll-cue i { animation-play-state: paused; }
 @keyframes breathe-line { 50% { transform: scaleX(0.5); opacity: 0.45; } }
 
 .origin-statement { min-height: 96vh; display: grid; align-content: center; padding: clamp(80px, 13vw, 200px) clamp(24px, 8vw, 138px); background: var(--surface-paper); color: var(--surface-paper-ink); }
