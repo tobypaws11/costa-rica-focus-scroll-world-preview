@@ -78,7 +78,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-
 .scene-stack, .scene { position: absolute; inset: 0; }
 .scene { overflow: hidden; visibility: hidden; }
 .scene.is-active { visibility: visible; }
-.scene-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.scene-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--scene-focal, center); }
 .scene-video { opacity: 0; transition: opacity 220ms ease-out; }
 .scene-video.is-painted { opacity: 1; }
 .scene-grade { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(var(--scene-scrim-rgb) / 0.88) 0%, rgb(var(--scene-scrim-rgb) / 0.5) 28%, transparent 62%), linear-gradient(0deg, rgb(var(--scene-scrim-rgb) / 0.38) 0%, transparent 35%); }
@@ -285,7 +285,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-
   .sight-line-left { left: 20px; }
   .sight-line-right { right: 20px; }
   .scene-grade { background: linear-gradient(0deg, rgb(var(--scene-scrim-rgb) / 0.96) 0%, rgb(var(--scene-scrim-rgb) / 0.64) 33%, transparent 68%); }
-  .scene-media { object-position: center 48%; }
+  .scene-media { object-position: var(--scene-focal-mobile, var(--scene-focal, center)); }
   .chapter-copy { left: 36px; right: 58px; bottom: calc(66px + env(safe-area-inset-bottom)); width: auto; }
   .chapter-count { display: none; }
   .chapter-copy h1 { max-width: 11ch; font-size: clamp(2.55rem, 12vw, 4.25rem); }

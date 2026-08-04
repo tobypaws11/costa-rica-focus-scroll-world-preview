@@ -94,6 +94,7 @@ function CinematicStory({ pathname }) {
                   active={index === active}
                   load={shouldLoad}
                   focal={scene.focal}
+                  mobileFocal={scene.mobileFocal}
                 />
                 <div className="scene-grade" />
               </div>

@@ -14,7 +14,7 @@ const syncToTarget = (video, progress) => {
   return false;
 };
 
-export default function ScrubVideo({ src, mobileSrc, poster, progress, active, load, focal }) {
+export default function ScrubVideo({ src, mobileSrc, poster, progress, active, load, focal, mobileFocal }) {
   const videoRef = useRef(null);
   const targetRef = useRef(0);
   const [requested, setRequested] = useState(load);
@@ -29,10 +29,7 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
     if (!requested || !src) return undefined;
 
     const mobile = matchMedia("(max-width: 860px), (pointer: coarse)").matches;
-    const connection = navigator.connection ?? navigator.mozConnection ?? navigator.webkitConnection;
-    const constrained = connection?.saveData
-      || ["slow-2g", "2g"].includes(connection?.effectiveType);
-    const selected = mobile && mobileSrc && constrained ? mobileSrc : src;
+    const selected = mobile && mobileSrc ? mobileSrc : src;
     const video = videoRef.current;
     if (!selected || !video) return undefined;
 
@@ -81,7 +78,7 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
         className="scene-media scene-poster"
         src={poster}
         alt=""
-        style={{ objectPosition: focal }}
+        style={{ "--scene-focal": focal, "--scene-focal-mobile": mobileFocal ?? focal }}
         decoding="async"
         fetchPriority={active ? "high" : "auto"}
       />
@@ -89,7 +86,7 @@ export default function ScrubVideo({ src, mobileSrc, poster, progress, active, l
         <video
           ref={videoRef}
           className={`scene-media scene-video ${painted ? "is-painted" : ""}`}
-          style={{ objectPosition: focal }}
+          style={{ "--scene-focal": focal, "--scene-focal-mobile": mobileFocal ?? focal }}
           muted
           playsInline
           preload={active ? "auto" : requested ? "metadata" : "none"}
