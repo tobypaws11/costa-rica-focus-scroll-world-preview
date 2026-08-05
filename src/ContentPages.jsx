@@ -132,7 +132,7 @@ function AboutPage({ pathname }) {
       <PageHero
         title="A family story, grown against the wind."
         intro="Montanoa began with school books, hard work and the decision to return home with new knowledge."
-        detail="San Luis · Monteverde · Since 1997"
+        detail="San Luis · Monteverde · Family farm"
         image="/assets/original/about-0430.jpeg"
         alt="Espresso being prepared at Montanoa"
         focal="69% 54%"
@@ -198,7 +198,7 @@ function FarmPage({ pathname }) {
     <PageFrame pathname={pathname}>
       <PageHero
         title="A pasture became a sanctuary."
-        intro="The Leitón family has cared for and transformed this land below the Monteverde Cloud Forest since 1997."
+        intro="The Leitón family has spent decades transforming this land below the Monteverde Cloud Forest."
         detail="Working family farm · San Luis"
         image="/assets/original/farm-0112.jpeg"
         alt="The forested Montanoa coffee farm"
@@ -207,7 +207,7 @@ function FarmPage({ pathname }) {
       <section className="story-grid">
         <h2>First came the land. Then came the trees.</h2>
         <div className="reading-copy">
-          <p>San Luis was founded in 1917 by families who migrated from Costa Rica’s central valley in search of new land. In the 1990s, a Quaker community bought a large property and made land available to 25 local families. The Leitón family became one of them, with a responsibility to keep the land as a home and make a sustainable living from it.</p>
+          <p>San Luis was settled by several Costa Rican farming families between 1915 and 1920; local community history places its founding in 1918. Beginning in 1993, local San Luiseños, the Monteverde Quaker community and Quaker Earthcare Witness collaborated to establish Finca La Bella. The project provided 24 previously landless families with renewable leases to farm while conserving the forest. William and Damaris Leitón were among its parceleros, accepting the responsibility to keep the land as a home, conserve it and make a sustainable living from it.</p>
           <p>The property arrived as an old grass cattle field with almost no trees. William Leitón planted <em>Montanoa guatemalensis</em> around the boundaries and through the property to create wind-protected sections.</p>
           <p>For 15 years he watered those trees through dry seasons and cleared weeds through the rain. That shelter eventually made room for coffee, avocados, plantains, bananas, corn, oranges, limes and many smaller crops—as well as insects, birds and wildlife.</p>
         </div>
