@@ -99,6 +99,8 @@ function CinematicStory({ pathname, motionReady }) {
                   load={shouldLoad}
                   focal={scene.focal}
                   mobileFocal={scene.mobileFocal}
+                  entryFocal={index > 0 ? scenes[index - 1].focal : scene.focal}
+                  entryMobileFocal={index > 0 ? scenes[index - 1].mobileFocal : scene.mobileFocal}
                 />
                 <div className="scene-grade" />
               </div>
