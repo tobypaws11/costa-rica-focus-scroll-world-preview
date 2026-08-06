@@ -72,6 +72,62 @@ function PhotoField({ eyebrow, title, intro, images, className = "" }) {
   );
 }
 
+function FieldAtlas({ title, intro, observations }) {
+  return (
+    <section className="field-atlas" aria-labelledby="field-atlas-title">
+      <header className="field-atlas-heading">
+        <h2 id="field-atlas-title">{title}</h2>
+        <p>{intro}</p>
+      </header>
+
+      <div className="field-atlas-list">
+        {observations.map((observation, index) => (
+          <figure className="field-atlas-entry" key={observation.src}>
+            <div className="field-atlas-media">
+              <ResponsiveImage
+                src={observation.src}
+                alt={observation.alt}
+                sizes="(max-width: 860px) 100vw, 64vw"
+                style={{ objectPosition: observation.focal ?? "center" }}
+              />
+            </div>
+
+            <figcaption className="field-atlas-note">
+              <p className="field-atlas-index">Observation {String(index + 1).padStart(2, "0")}</p>
+              <dl>
+                <div>
+                  <dt>Subject</dt>
+                  <dd>{observation.subject}</dd>
+                </div>
+                <div>
+                  <dt>Stage</dt>
+                  <dd>{observation.stage}</dd>
+                </div>
+                <div>
+                  <dt>Practice</dt>
+                  <dd>{observation.practice}</dd>
+                </div>
+              </dl>
+              <p className="field-atlas-observation">{observation.note}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <footer className="field-atlas-bridge">
+        <div>
+          <h3>The farm never shows the same chapter twice.</h3>
+          <p>Blossom, green fruit, harvest and drying each arrive in their own time. A visit follows the work the season makes possible.</p>
+        </div>
+        <a href="#farm-tour">
+          See the visit experience
+          <ArrowUpRight aria-hidden="true" />
+        </a>
+      </footer>
+    </section>
+  );
+}
+
 function ContactBand({ title = "Continue the conversation.", body }) {
   return (
     <section className="contact-band">
@@ -228,18 +284,45 @@ function FarmPage({ pathname }) {
           ))}
         </div>
       </section>
-      <PhotoField
-        eyebrow="Field notes"
-        title="A farm read through small details."
-        intro="The original Montanoa archive returns here as a closer look at the plants, flowering cycles and hand-scale processing behind the larger landscape."
-        images={[
-          { src: "/assets/original/farm-0092.jpeg", alt: "Green coffee cherries ripening on a branch at Montanoa", caption: "Coffee fruit developing under the farm canopy" },
-          { src: "/assets/original/farm-0029.jpeg", alt: "A red flower growing on the Montanoa farm", caption: "Biodiversity woven into the working farm", tall: true },
-          { src: "/assets/original/farm-0005.jpeg", alt: "White coffee blossoms and green leaves at Montanoa", caption: "Coffee blossom before the fruit" },
-          { src: "/assets/original/farm-0059.jpeg", alt: "Green coffee beans being examined during processing", caption: "Care and observation at every stage" },
+      <FieldAtlas
+        title="Read the farm in four living details."
+        intro="Fruit, companion flora, blossom and green coffee reveal how Montanoa moves from one season and stage of work to the next."
+        observations={[
+          {
+            src: "/assets/original/farm-0092.jpeg",
+            alt: "Green coffee cherries developing on a branch at Montanoa",
+            subject: "Coffee fruit",
+            stage: "Green development",
+            practice: "Shade-grown canopy",
+            note: "The fruit begins green and slowly changes color as it moves toward harvest.",
+          },
+          {
+            src: "/assets/original/farm-0029.jpeg",
+            alt: "A red flowering plant growing on the Montanoa farm",
+            subject: "Companion flora",
+            stage: "Flowering habitat",
+            practice: "Farm biodiversity",
+            note: "Not every plant here is coffee. Flowering plants share the working landscape with food crops, insects and birds.",
+          },
+          {
+            src: "/assets/original/farm-0005.jpeg",
+            alt: "White coffee blossoms among green leaves at Montanoa",
+            subject: "Coffee blossom",
+            stage: "Before fruit set",
+            practice: "Seasonal observation",
+            note: "These short-lived white flowers mark the beginning of the next fruit cycle.",
+          },
+          {
+            src: "/assets/original/farm-0059.jpeg",
+            alt: "Green coffee being measured during post-harvest processing",
+            subject: "Green coffee",
+            stage: "Post-harvest",
+            practice: "Lot measurement",
+            note: "Green coffee is checked before roasting so each lot can be handled with greater consistency.",
+          },
         ]}
       />
-      <section className="tour-section">
+      <section className="tour-section" id="farm-tour">
         <div>
           <h2>Tour the real seed-to-cup process.</h2>
           <p>Spend two hours inside the work of a specialty-coffee farm. The activity depends on the season and may include harvesting, drying or fertilizing. The experience ends with coffee tasting; a homemade, locally sourced family meal can be requested in advance.</p>
