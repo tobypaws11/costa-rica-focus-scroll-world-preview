@@ -41,6 +41,7 @@ export function SiteHeader({ overlay = false, pathname = "/" }) {
 
   return (
     <header className={`site-header ${overlay ? "is-overlay" : "is-page"}`}>
+      <a className="skip-link" href={overlay ? "#home-story" : "#main-content"}>Skip to content</a>
       <Wordmark />
       <nav className="desktop-nav" aria-label="Primary navigation">
         {navItems.map((item) => (

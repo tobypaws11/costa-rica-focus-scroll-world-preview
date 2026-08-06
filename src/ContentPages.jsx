@@ -18,7 +18,7 @@ function PageHero({ title, intro, detail, image, alt, focal = "center" }) {
       />
       <div className="content-hero-grade" />
       <div className="content-hero-copy">
-        <h1>{title}</h1>
+        <h1 tabIndex={-1}>{title}</h1>
         <p>{intro}</p>
         {detail ? <span>{detail}</span> : null}
       </div>
@@ -30,7 +30,7 @@ function PageFrame({ pathname, children }) {
   return (
     <>
       <SiteHeader pathname={pathname} />
-      <main className="content-page">{children}</main>
+      <main id="main-content" className="content-page" tabIndex={-1}>{children}</main>
       <SiteFooter />
     </>
   );
@@ -676,7 +676,7 @@ function NotFoundPage({ pathname }) {
   return (
     <PageFrame pathname={pathname}>
       <section className="not-found">
-        <h1>This path has not been planted yet.</h1>
+        <h1 tabIndex={-1}>This path has not been planted yet.</h1>
         <p>The page you requested does not exist. Return to the Montanoa story or plan a visit.</p>
         <div><Link className="action action-primary" to="/">Return home</Link><Link className="action action-secondary" to="/visit">Plan a visit</Link></div>
       </section>

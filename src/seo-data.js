@@ -1,7 +1,13 @@
-export const siteUrl = "https://montanoa.com";
+const nodeSiteUrl = typeof process !== "undefined" ? process.env?.VITE_SITE_URL : undefined;
+const browserSiteUrl = import.meta.env?.VITE_SITE_URL;
+
+export const siteUrl = (browserSiteUrl || nodeSiteUrl || "https://montanoa-preview.vercel.app").replace(/\/$/, "");
 export const socialImage = `${siteUrl}/assets/montanoa-coffee-hands-start-16x9.webp`;
 
-export const defaultRobots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+export const isProductionSite = !new URL(siteUrl).hostname.endsWith(".vercel.app");
+export const defaultRobots = isProductionSite
+  ? "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+  : "noindex, nofollow";
 
 export const pageSeo = {
   "/": {
@@ -89,4 +95,62 @@ export function pageStructuredData(pathname = "/") {
   }
 
   return page;
+}
+
+export function siteStructuredData() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        url: `${siteUrl}/`,
+        name: "Montanoa",
+        description: "A family-run coffee farm, coffee academy and nature stay in San Luis, Monteverde, Costa Rica.",
+        inLanguage: "en",
+        publisher: { "@id": `${siteUrl}/#business` },
+      },
+      {
+        "@type": ["LocalBusiness", "TouristAttraction"],
+        "@id": `${siteUrl}/#business`,
+        name: "Montanoa",
+        alternateName: "Montanoa Coffee & Village",
+        description: "A family-run coffee farm, coffee academy and nature stay in San Luis, Monteverde, Costa Rica.",
+        url: `${siteUrl}/`,
+        logo: `${siteUrl}/assets/brand/montanoa-logo-white.png`,
+        image: socialImage,
+        email: "coffee@montanoa.com",
+        telephone: "+50683182105",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "San Luis",
+          addressRegion: "Puntarenas",
+          addressCountry: "CR",
+        },
+        areaServed: {
+          "@type": "Place",
+          name: "Monteverde, Puntarenas, Costa Rica",
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "visitor information",
+          email: "coffee@montanoa.com",
+          telephone: "+50683182105",
+        },
+        makesOffer: [
+          { "@type": "Offer", url: `${siteUrl}/farm`, itemOffered: { "@type": "Service", name: "Coffee farm visit" } },
+          { "@type": "Offer", url: `${siteUrl}/academy`, itemOffered: { "@type": "Service", name: "Coffee education and training" } },
+          { "@type": "Offer", url: `${siteUrl}/stay`, itemOffered: { "@type": "Service", name: "Nature lodging" } },
+        ],
+        knowsAbout: [
+          "Costa Rican specialty coffee",
+          "coffee farming",
+          "coffee processing",
+          "barista education",
+          "coffee tasting",
+          "nature lodging",
+        ],
+      },
+    ],
+  };
 }

@@ -48,6 +48,25 @@ button, a { font: inherit; }
 a { color: inherit; }
 button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
 
+.skip-link {
+  position: fixed;
+  z-index: 120;
+  top: 12px;
+  left: 12px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
+  transform: translateY(calc(-100% - 24px));
+  background: var(--gold);
+  color: var(--ink-dark);
+  text-decoration: none;
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  transition: transform 180ms ease-out;
+}
+.skip-link:focus { transform: none; }
+
 .cinematic { position: relative; height: 720vh; background: var(--volcanic); }
 .stage { position: sticky; top: 0; width: 100%; height: 100dvh; min-height: 620px; overflow: hidden; isolation: isolate; }
 .stage-progress { position: absolute; inset: 0 0 auto; z-index: 60; height: 2px; background: rgb(255 255 255 / 0.12); }
@@ -457,10 +476,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-
 .not-found > p { max-width: 58ch; margin: 28px 0 0; color: var(--ink-soft); }
 .not-found > div { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 
-.reduced-story { background: var(--volcanic); }
+.reduced-story { position: relative; background: var(--volcanic); }
 .reduced-chapter { min-height: 100vh; display: grid; grid-template-columns: 1.25fr 0.75fr; align-items: center; gap: 6vw; padding: 9vw; }
 .reduced-chapter img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
-.reduced-chapter h2 { margin: 0; font-family: var(--font-display); font-size: clamp(3rem, 5vw, 5rem); line-height: 0.95; letter-spacing: -0.03em; font-weight: 430; font-optical-sizing: auto; }
+.reduced-chapter h1, .reduced-chapter h2 { margin: 0; font-family: var(--font-display); font-size: clamp(3rem, 5vw, 5rem); line-height: 0.95; letter-spacing: -0.03em; font-weight: 430; font-optical-sizing: auto; }
 .reduced-chapter .chapter-context { color: var(--gold); }
 .reduced-chapter div > p:last-child { max-width: 55ch; color: var(--ink-soft); line-height: 1.65; }
 

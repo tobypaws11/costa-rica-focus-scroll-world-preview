@@ -3,17 +3,17 @@ import { useEffect, useRef, useState } from "react";
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
 export function useReducedMotion() {
-  const [reduced, setReduced] = useState(false);
+  const [preference, setPreference] = useState({ reduced: false, ready: false });
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(media.matches);
+    const update = () => setPreference({ reduced: media.matches, ready: true });
     update();
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
   }, []);
 
-  return reduced;
+  return preference;
 }
 
 export function useScrollSequence(count) {

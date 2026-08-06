@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { canonicalUrl, defaultRobots, pageSeo, pageStructuredData, socialImage } from "./seo-data";
+import { canonicalUrl, defaultRobots, pageSeo, pageStructuredData, siteStructuredData, socialImage } from "./seo-data";
 
 function setMeta(attribute, key, content) {
   let element = document.head.querySelector(`meta[${attribute}="${key}"]`);
@@ -49,6 +49,9 @@ export function Seo({ pathname }) {
       document.head.appendChild(pageSchema);
     }
     pageSchema.textContent = JSON.stringify(pageStructuredData(pathname));
+
+    const siteSchema = document.head.querySelector("#site-structured-data");
+    if (siteSchema) siteSchema.textContent = JSON.stringify(siteStructuredData());
   }, [pathname]);
 
   return null;

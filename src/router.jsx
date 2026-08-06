@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const normalizePath = (path) => {
   if (!path || path === "/") return "/";
   return `/${path.split("?")[0].split("#")[0].replace(/^\/+|\/+$/g, "")}`;
 };
 
-export function usePathname() {
-  const [pathname, setPathname] = useState(() => normalizePath(window.location.pathname));
+export function usePathname(initialPathname) {
+  const [pathname, setPathname] = useState(() => normalizePath(
+    initialPathname ?? (typeof window === "undefined" ? "/" : window.location.pathname),
+  ));
+  const previousPathname = useRef(pathname);
 
   useEffect(() => {
     const update = () => setPathname(normalizePath(window.location.pathname));
@@ -15,7 +18,15 @@ export function usePathname() {
   }, []);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    if (previousPathname.current === pathname) return undefined;
+    previousPathname.current = pathname;
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+    const frame = window.requestAnimationFrame(() => {
+      document.querySelector("main h1")?.focus({ preventScroll: true });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, [pathname]);
 
   return pathname;

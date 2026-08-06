@@ -21,9 +21,10 @@ const paths = {
   lodging: "/stay",
 };
 
-function ReducedStory() {
+function ReducedStory({ pathname }) {
   return (
     <section className="reduced-story" aria-label="The Montanoa story">
+      <SiteHeader overlay pathname={pathname} />
       {scenes.map((scene, index) => (
         <article key={scene.id} id={scene.id} className="reduced-chapter">
           <img
@@ -34,7 +35,9 @@ function ReducedStory() {
             decoding="async"
           />
           <div>
-            <h2>{scene.title}</h2>
+            {index === 0
+              ? <h1 id="home-story" tabIndex={-1}>{scene.title}</h1>
+              : <h2>{scene.title}</h2>}
             <p className="chapter-context">{scene.kicker}</p>
             <p>{scene.body}</p>
           </div>
@@ -44,7 +47,7 @@ function ReducedStory() {
   );
 }
 
-function CinematicStory({ pathname }) {
+function CinematicStory({ pathname, motionReady }) {
   const { rootRef, progress, active } = useScrollSequence(scenes.length);
   const chapterProgress = useMemo(
     () => scenes.map((_, index) => sceneProgress(progress, index, scenes.length)),
@@ -78,8 +81,9 @@ function CinematicStory({ pathname }) {
           {scenes.map((scene, index) => {
             const opacity = sceneOpacity(progress, index, scenes.length);
             const local = chapterProgress[index];
-            const shouldLoad = index === active
-              || (index === active + 1 && chapterProgress[active] >= 0.72);
+            const shouldLoad = motionReady && (
+              index === active || (index === active + 1 && chapterProgress[active] >= 0.72)
+            );
             return (
               <div
                 key={scene.id}
@@ -109,10 +113,11 @@ function CinematicStory({ pathname }) {
                 className={`chapter-copy ${index === active ? "is-active" : ""}`}
                 key={scene.id}
                 aria-hidden={index !== active}
+                inert={index !== active}
                 style={{ opacity: index === active ? 1 : 0, "--chapter-accent": scene.accent }}
               >
                 <p className="chapter-count">{String(index + 1).padStart(2, "0")} / {String(scenes.length).padStart(2, "0")}</p>
-                <h1>{scene.title}</h1>
+                <h1 id={index === 0 ? "home-story" : undefined} tabIndex={index === 0 ? -1 : undefined}>{scene.title}</h1>
                 <p className="chapter-context">{scene.kicker}</p>
                 <p className="chapter-body">{scene.body}</p>
                 <ul className="chapter-tags" aria-label="Highlights">
@@ -185,9 +190,9 @@ function Pathways() {
   );
 }
 
-function App() {
-  const reduced = useReducedMotion();
-  const pathname = usePathname();
+function App({ initialPathname }) {
+  const { reduced, ready: motionReady } = useReducedMotion();
+  const pathname = usePathname(initialPathname);
 
   if (pathname !== "/") {
     return (
@@ -202,7 +207,9 @@ function App() {
     <>
       <Seo pathname={pathname} />
       <main id="top">
-        {reduced ? <ReducedStory /> : <CinematicStory pathname={pathname} />}
+        {reduced
+          ? <ReducedStory pathname={pathname} />
+          : <CinematicStory pathname={pathname} motionReady={motionReady} />}
         <section className="origin-statement" aria-labelledby="origin-title">
           <p>San Luis · Monteverde · Costa Rica</p>
           <h2 id="origin-title">A family farm grown from wind, patience and a promise to the land.</h2>
