@@ -34,6 +34,11 @@ const syncToTarget = (video, progress) => {
   return false;
 };
 
+const revealSyncedFrame = (video, progress, seamlessEntry, reveal) => {
+  const aligned = syncToTarget(video, progress);
+  if (aligned && video?.readyState >= 2 && (progress > 0.004 || seamlessEntry)) reveal(true);
+};
+
 export default function ScrubVideo({
   src,
   mobileSrc,
@@ -45,6 +50,7 @@ export default function ScrubVideo({
   mobileFocal,
   entryFocal,
   entryMobileFocal,
+  seamlessEntry = false,
 }) {
   const videoRef = useRef(null);
   const targetRef = useRef(0);
@@ -90,10 +96,10 @@ export default function ScrubVideo({
   useEffect(() => {
     targetRef.current = clamp(progress);
     const video = videoRef.current;
-    if (targetRef.current <= 0.004) setPainted(false);
+    if (targetRef.current <= 0.004 && !seamlessEntry) setPainted(false);
     if (!ready || !video) return;
-    syncToTarget(video, targetRef.current);
-  }, [progress, ready]);
+    revealSyncedFrame(video, targetRef.current, seamlessEntry, setPainted);
+  }, [progress, ready, seamlessEntry]);
 
   useEffect(() => {
     const prime = () => {
@@ -131,15 +137,11 @@ export default function ScrubVideo({
           onLoadedMetadata={() => setReady(true)}
           onLoadedData={() => {
             const video = videoRef.current;
-            if (targetRef.current > 0.004 && syncToTarget(video, targetRef.current)) {
-              setPainted(true);
-            }
+            revealSyncedFrame(video, targetRef.current, seamlessEntry, setPainted);
           }}
           onSeeked={() => {
             const video = videoRef.current;
-            if (targetRef.current > 0.004 && syncToTarget(video, targetRef.current)) {
-              setPainted(true);
-            }
+            revealSyncedFrame(video, targetRef.current, seamlessEntry, setPainted);
           }}
         />
       ) : null}
